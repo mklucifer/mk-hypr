@@ -121,12 +121,13 @@ nvidia_stage=(
 )
 
 install_stage=(
-    hyprland kitty mako waybar swww swaylock-effects wofi wlogout
+    hyprland kitty mako waybar swaync hyprshot swaylock-effects wofi wlogout
     xdg-desktop-portal-hyprland swappy grim slurp thunar btop firefox
     thunderbird mpv pamixer pavucontrol brightnessctl bluez bluez-utils
     blueman network-manager-applet gvfs thunar-archive-plugin file-roller
     starship papirus-icon-theme ttf-jetbrains-mono-nerd noto-fonts-emoji
-    lxappearance xfce4-settings nwg-look-bin sddm neovim tmux
+    lxappearance xfce4-settings nwg-look-bin sddm neovim tmux fzf
+    hyprlock matugen-bin unzip zsh hyprshot hyprpaper ghostty
 )
 
 # 5. Nvidia Prompt and Final Package List Construction
