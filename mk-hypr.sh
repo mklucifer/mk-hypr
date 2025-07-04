@@ -165,6 +165,24 @@ echo
 cd "$(dirname "$0")"
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
+    # Ask if user wants to back up existing configs
+    read -p "Would you like to back up your current configuration files? (y/N) " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        BACKUP_DIR="$HOME/config.orig"
+        log "Backing up existing config files to $BACKUP_DIR..." "$YELLOW"
+        mkdir -p "$BACKUP_DIR"
+        for item in config/*; do
+            cfg_name="$(basename "$item")"
+            if [ -e "$HOME/.config/$cfg_name" ]; then
+                cp -r "$HOME/.config/$cfg_name" "$BACKUP_DIR/"
+            fi
+        done
+        log "Backup complete." "$GREEN"
+    else
+        log "Skipping backup of existing configs." "$YELLOW"
+    fi
+
     log "Symlinking configuration files..." "$GREEN"
     if [ -d "config" ]; then
         mkdir -p ~/.config
