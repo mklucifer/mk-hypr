@@ -157,49 +157,44 @@ flatpak install -y flathub com.spotify.Client
 check_status "Failed to install Spotify via Flatpak."
 log "Spotify installed via Flatpak successfully." "$GREEN"
 
-# 8. Symlink Configuration Files
-log "\nPreparing to symlink configuration files..." "$YELLOW"
-read -p "Do you want to symlink the recommended configurations for Hyprland, Kitty, Waybar, etc.? (y/N) " -n 1 -r
+# 8. Copy Configuration Files
+log "\nPreparing to set up configuration files..." "$YELLOW"
+read -p "Do you want to install the recommended configurations for Hyprland, Kitty, Waybar, etc.? (y/N) " -n 1 -r
 echo
-
-cd "$(dirname "$0")"
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     # Ask if user wants to back up existing configs
-    read -p "Would you like to back up your current configuration files? (y/N) " -n 1 -r
+    read -p "Would you like to back up your current ~/.config directory? (y/N) " -n 1 -r
     echo
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         BACKUP_DIR="$HOME/config.orig"
-        log "Backing up existing config files to $BACKUP_DIR..." "$YELLOW"
-        mkdir -p "$BACKUP_DIR"
-        for item in config/*; do
-            cfg_name="$(basename "$item")"
-            if [ -e "$HOME/.config/$cfg_name" ]; then
-                cp -r "$HOME/.config/$cfg_name" "$BACKUP_DIR/"
-            fi
-        done
-        log "Backup complete." "$GREEN"
+        log "Backing up entire ~/.config to $BACKUP_DIR..." "$YELLOW"
+        if [ -d "$HOME/.config" ]; then
+            cp -r "$HOME/.config" "$BACKUP_DIR"
+            check_status "Backup failed"
+            log "Backup completed successfully." "$GREEN"
+        else
+            log "~/.config does not exist. Skipping backup." "$YELLOW"
+        fi
     else
-        log "Skipping backup of existing configs." "$YELLOW"
+        log "Skipping backup of ~/.config." "$YELLOW"
     fi
 
-    log "Symlinking configuration files..." "$GREEN"
-    if [ -d "config" ]; then
-        mkdir -p ~/.config
-        # Symlink each file or directory
-        for item in config/*; do
-            target="$HOME/.config/$(basename "$item")"
-            ln -sf "$PWD/$item" "$target"
-        done
-        check_status "Failed to symlink config files."
-        log "Configuration files symlinked successfully." "$GREEN"
+    # Copy repo config files to ~/.config
+    if [ -d "$HOME/mk-hypr/config" ]; then
+        log "Copying configuration files from repo to ~/.config..." "$YELLOW"
+        mkdir -p "$HOME/.config"
+        cp -r "$HOME/mk-hypr/config/"* "$HOME/.config/"
+        check_status "Failed to copy configuration files."
+        log "Configuration files copied successfully." "$GREEN"
     else
-        log "Warning: 'config' directory not found where the script is located." "$RED"
+        log "Warning: 'config' directory not found at $HOME/mk-hypr/" "$RED"
         log "Please make sure your dotfiles are in a 'config' directory next to this script." "$YELLOW"
     fi
 else
-    log "Skipping configuration symlink." "$YELLOW"
+    log "Skipping configuration setup." "$YELLOW"
 fi
+
 
 # 9. Copying SDDM config and theme
 log "\nCopying SDDM configuration and theme..." "$YELLOW"
@@ -211,7 +206,7 @@ if [ -f "extras/sddm/default.conf" ]; then
     check_status "Failed to copy default.conf to /usr/lib/sddm/sddm.conf.d/"
     log "Copied SDDM default.conf successfully." "$GREEN"
 else
-    log "Warning: sddm/default.conf not found; skipping SDDM config copy." "$YELLOW"
+    log "Warning: extras/sddm/default.conf not found; skipping SDDM config copy." "$YELLOW"
 fi
 # Copy sddm theme
 if [ -d "extras/sddm/chili" ]; then
