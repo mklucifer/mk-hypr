@@ -206,21 +206,21 @@ log "\nCopying SDDM configuration and theme..." "$YELLOW"
 # Ensure SDDM config directory exists
 sudo mkdir -p /usr/lib/sddm/sddm.conf.d
 # Copy default.conf
-if [ -f "sddm/default.conf" ]; then
-    sudo cp "sddm/default.conf" /usr/lib/sddm/sddm.conf.d/
+if [ -f "extras/sddm/default.conf" ]; then
+    sudo cp "extras/sddm/default.conf" /usr/lib/sddm/sddm.conf.d/
     check_status "Failed to copy default.conf to /usr/lib/sddm/sddm.conf.d/"
     log "Copied SDDM default.conf successfully." "$GREEN"
 else
     log "Warning: sddm/default.conf not found; skipping SDDM config copy." "$YELLOW"
 fi
-# Copy chili theme
-if [ -d "sddm/chili" ]; then
+# Copy sddm theme
+if [ -d "extras/sddm/chili" ]; then
     sudo mkdir -p /usr/share/sddm/themes
-    sudo cp -r "sddm/chili" /usr/share/sddm/themes/
-    check_status "Failed to copy chili theme to /usr/share/sddm/themes/"
-    log "Copied chili theme successfully." "$GREEN"
+    sudo cp -r "extras/sddm/chili" /usr/share/sddm/themes/
+    check_status "Failed to copy sddm theme to /usr/share/sddm/themes/"
+    log "Copied sddm themes successfully." "$GREEN"
 else
-    log "Warning: sddm/chili directory not found; skipping SDDM theme copy." "$YELLOW"
+    log "Warning: extras/sddm/ directory not found; skipping SDDM theme copy." "$YELLOW"
 fi
 
 # 10. Enable System Services
