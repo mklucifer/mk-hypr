@@ -157,26 +157,30 @@ flatpak install -y flathub com.spotify.Client
 check_status "Failed to install Spotify via Flatpak."
 log "Spotify installed via Flatpak successfully." "$GREEN"
 
-# 8. Copying Configuration Files
-log "\nPreparing to copy configuration files..." "$YELLOW"
-read -p "Do you want to copy the recommended configurations for Hyprland, Kitty, Waybar, etc.? (y/N) " -n 1 -r
+# 8. Symlink Configuration Files
+log "\nPreparing to symlink configuration files..." "$YELLOW"
+read -p "Do you want to symlink the recommended configurations for Hyprland, Kitty, Waybar, etc.? (y/N) " -n 1 -r
 echo
 
 cd "$(dirname "$0")"
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-    log "Copying configuration files..." "$GREEN"
+    log "Symlinking configuration files..." "$GREEN"
     if [ -d "config" ]; then
         mkdir -p ~/.config
-        cp -r config/* ~/.config/
-        check_status "Failed to copy config files."
-        log "Configuration files copied successfully." "$GREEN"
+        # Symlink each file or directory
+        for item in config/*; do
+            target="$HOME/.config/$(basename "$item")"
+            ln -sf "$PWD/$item" "$target"
+        done
+        check_status "Failed to symlink config files."
+        log "Configuration files symlinked successfully." "$GREEN"
     else
         log "Warning: 'config' directory not found where the script is located." "$RED"
         log "Please make sure your dotfiles are in a 'config' directory next to this script." "$YELLOW"
     fi
 else
-    log "Skipping configuration file copy." "$YELLOW"
+    log "Skipping configuration symlink." "$YELLOW"
 fi
 
 # 9. Copying SDDM config and theme
@@ -191,13 +195,14 @@ if [ -f "sddm/default.conf" ]; then
 else
     log "Warning: sddm/default.conf not found; skipping SDDM config copy." "$YELLOW"
 fi
-# Copy sddm theme
-if [ -d "extras/sddm/themes" ]; then
-    sudo cp -r "extras/sddm/themes" /usr/share/sddm/
-    check_status "Failed to copy sddm themes to /usr/share/sddm/themes/"
+# Copy chili theme
+if [ -d "sddm/chili" ]; then
+    sudo mkdir -p /usr/share/sddm/themes
+    sudo cp -r "sddm/chili" /usr/share/sddm/themes/
+    check_status "Failed to copy chili theme to /usr/share/sddm/themes/"
     log "Copied chili theme successfully." "$GREEN"
 else
-    log "Warning: extras/sddm/themes directory not found; skipping SDDM theme copy." "$YELLOW"
+    log "Warning: sddm/chili directory not found; skipping SDDM theme copy." "$YELLOW"
 fi
 
 # 10. Enable System Services
@@ -208,18 +213,10 @@ sudo systemctl enable NetworkManager.service
 check_status "Failed to enable NetworkManager."
 sudo systemctl enable bluetooth.service
 check_status "Failed to enable Bluetooth."
+sudo systemctl enable displaylink.service
+check_status "Failed to enable Displaylink."
 
-# 11. Copying Wifi powersaver disable config
-if [ -d "extras/wifi" ]; then
-    log "\nCopying wifi config file to disable powersaver mode." "$YELLOW"
-    sudo cp extras/wifi/wifi-powersave.conf /etc/NetworkManager/conf.d/wifi-powersave.conf
-    check_status "Failed to copy wifi powersave config to /etc/NetworkMAnager/conf.d/"
-    log "Copied wifi powersave mode successfully." "$GREEN"
-else
-    log "Warning: extras/wifi directory not found; skipping wifi-powersave config copy." "$YELLOW"
-fi
-
-# 12. Reboot Prompt
+# 11. Reboot Prompt
 log "\nInstallation and configuration complete!" "$GREEN"
 read -p "Would you like to reboot now to apply all changes? (y/N) " -n 1 -r
 echo
