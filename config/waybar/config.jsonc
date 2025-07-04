@@ -8,16 +8,15 @@
     "height": 50,
     "modules-left": [
         "custom/launcher",
-        "wlr/taskbar",
+        "network",
+        "temperature",
+        "battery",
         "custom/player"
     ],
     "modules-center": [
         "hyprland/workspaces"
     ],
     "modules-right": [
-        "network",
-        "temperature",
-        "battery",
         "pulseaudio",
         "pulseaudio#microphone",
         "clock",
@@ -27,14 +26,14 @@
     "hyprland/workspaces": {
         "format": "{icon}",
         "format-icons": {
-            "default": "  ",
-            "urgent": " 󰊠 ",
+            "default": "",
+            "urgent": "󰊠",
             //"persistent": " ",
-            "active": " 󰮯 ",
-            "visible": " "
+            "active": "󰮯",
+            "visible": ""
         },
         "persistent-workspaces": {
-          "*": 3
+          "*": 2
         },
         "active-only": false,
         "all-outputs": false,
@@ -131,8 +130,8 @@
         "scroll-step": 5
     },
     "network": {
-        //"format-wifi": "   {signalStrength}%",
-        "format-wifi": " ",
+        "format-wifi": "   {signalStrength}%",
+        //"format-wifi": " ",
         "format-ethernet": " ",
         "tooltip-format": "{ipaddr}/{cidr}",
         "format-linked": "{ifname} (No IP)",
@@ -148,12 +147,12 @@
         "tooltip-format-enumerate-connected": "{device_alias}"
     },
     "custom/launcher": {
-        "format": " 󰣇 ",
+        "format": " 󰣇",
         "tooltip": false,
         "on-click": "~/.config/rofi/launchers/type-2/launcher.sh"
     },
     "custom/powermenu": {
-      "format": "  ",
+      "format": " ",
       "tooltip": false,
       "on-click": "~/.config/rofi/powermenu/type-2/powermenu.sh"
     },
