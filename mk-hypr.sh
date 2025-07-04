@@ -70,7 +70,7 @@ echo -e "${NC}"
 # 2. Confirmation Prompt
 log "This program will install a full Hyprland desktop. Do you want to continue?" "$YELLOW"
 read -p "Do you want to continue? (y/N) " -n 1 -r
-echo # Move to a new line
+echo
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
     log "Installation cancelled." "$RED"
     exit 0
@@ -126,9 +126,9 @@ install_stage=(
     thunderbird mpv pamixer pavucontrol brightnessctl bluez bluez-utils
     blueman network-manager-applet gvfs thunar-archive-plugin file-roller
     starship papirus-icon-theme ttf-jetbrains-mono-nerd noto-fonts-emoji
-    lxappearance xfce4-settings nwg-look-bin sddm neovim tmux fzf unzip
-    ttf-font-awesome hyprlock matugen-bin zsh hyprshot hyprpaper ghostty
-    zip
+    lxappearance xfce4-settings nwg-look-bin sddm neovim tmux fzf
+    hyprlock matugen-bin unzip zsh hyprshot hyprpaper ghostty fastfetch
+    qt5-quickcontrols zip discord flatpak
 )
 
 # 5. Nvidia Prompt and Final Package List Construction
@@ -150,20 +150,24 @@ log "\nStarting main installation process. This may take a while..." "$YELLOW"
 yay -S --needed --noconfirm "${packages_to_install[@]}"
 check_status "Failed to install one or more packages."
 
-# 7. Copying Configuration Files
+# 7. Install Flatpak and Spotify via Flatpak
+log "\nInstalling Spotify via Flatpak..." "$YELLOW"
+# Install Spotify
+flatpak install -y flathub com.spotify.Client
+check_status "Failed to install Spotify via Flatpak."
+log "Spotify installed via Flatpak successfully." "$GREEN"
+
+# 8. Copying Configuration Files
 log "\nPreparing to copy configuration files..." "$YELLOW"
 read -p "Do you want to copy the recommended configurations for Hyprland, Kitty, Waybar, etc.? (y/N) " -n 1 -r
 echo
 
+cd "$(dirname "$0")"
+
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     log "Copying configuration files..." "$GREEN"
-    # This assumes you are running this script from within your cloned dotfiles repository
-    # and your config files are located in a directory named 'config' in that same repo.
-    cd "$(dirname "$0")"
     if [ -d "config" ]; then
-        # Ensure the target directory exists
         mkdir -p ~/.config
-        # Copy contents
         cp -r config/* ~/.config/
         check_status "Failed to copy config files."
         log "Configuration files copied successfully." "$GREEN"
@@ -175,7 +179,29 @@ else
     log "Skipping configuration file copy." "$YELLOW"
 fi
 
-# 8. Enable System Services
+# 9. Copying SDDM config and theme
+log "\nCopying SDDM configuration and theme..." "$YELLOW"
+# Ensure SDDM config directory exists
+sudo mkdir -p /usr/lib/sddm/sddm.conf.d
+# Copy default.conf
+if [ -f "sddm/default.conf" ]; then
+    sudo cp "sddm/default.conf" /usr/lib/sddm/sddm.conf.d/
+    check_status "Failed to copy default.conf to /usr/lib/sddm/sddm.conf.d/"
+    log "Copied SDDM default.conf successfully." "$GREEN"
+else
+    log "Warning: sddm/default.conf not found; skipping SDDM config copy." "$YELLOW"
+fi
+# Copy chili theme
+if [ -d "sddm/chili" ]; then
+    sudo mkdir -p /usr/share/sddm/themes
+    sudo cp -r "sddm/chili" /usr/share/sddm/themes/
+    check_status "Failed to copy chili theme to /usr/share/sddm/themes/"
+    log "Copied chili theme successfully." "$GREEN"
+else
+    log "Warning: sddm/chili directory not found; skipping SDDM theme copy." "$YELLOW"
+fi
+
+# 10. Enable System Services
 log "\nEnabling essential services..." "$YELLOW"
 sudo systemctl enable sddm.service
 check_status "Failed to enable SDDM."
@@ -184,7 +210,7 @@ check_status "Failed to enable NetworkManager."
 sudo systemctl enable bluetooth.service
 check_status "Failed to enable Bluetooth."
 
-# 9. Reboot Prompt
+# 11. Reboot Prompt
 log "\nInstallation and configuration complete!" "$GREEN"
 read -p "Would you like to reboot now to apply all changes? (y/N) " -n 1 -r
 echo
