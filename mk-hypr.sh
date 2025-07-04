@@ -128,7 +128,7 @@ install_stage=(
     starship papirus-icon-theme ttf-jetbrains-mono-nerd noto-fonts-emoji
     lxappearance xfce4-settings nwg-look-bin sddm neovim tmux fzf
     hyprlock matugen-bin unzip zsh hyprshot hyprpaper ghostty fastfetch
-    qt5-quickcontrols zip discord flatpak
+    qt5-quickcontrols zip discord flatpak linux-headers displaylink
 )
 
 # 5. Nvidia Prompt and Final Package List Construction
@@ -191,14 +191,13 @@ if [ -f "sddm/default.conf" ]; then
 else
     log "Warning: sddm/default.conf not found; skipping SDDM config copy." "$YELLOW"
 fi
-# Copy chili theme
-if [ -d "sddm/chili" ]; then
-    sudo mkdir -p /usr/share/sddm/themes
-    sudo cp -r "sddm/chili" /usr/share/sddm/themes/
-    check_status "Failed to copy chili theme to /usr/share/sddm/themes/"
+# Copy sddm theme
+if [ -d "extras/sddm/themes" ]; then
+    sudo cp -r "extras/sddm/themes" /usr/share/sddm/
+    check_status "Failed to copy sddm themes to /usr/share/sddm/themes/"
     log "Copied chili theme successfully." "$GREEN"
 else
-    log "Warning: sddm/chili directory not found; skipping SDDM theme copy." "$YELLOW"
+    log "Warning: extras/sddm/themes directory not found; skipping SDDM theme copy." "$YELLOW"
 fi
 
 # 10. Enable System Services
@@ -210,7 +209,17 @@ check_status "Failed to enable NetworkManager."
 sudo systemctl enable bluetooth.service
 check_status "Failed to enable Bluetooth."
 
-# 11. Reboot Prompt
+# 11. Copying Wifi powersaver disable config
+if [ -d "extras/wifi" ]; then
+    log "\nCopying wifi config file to disable powersaver mode." "$YELLOW"
+    sudo cp extras/wifi/wifi-powersave.conf /etc/NetworkManager/conf.d/wifi-powersave.conf
+    check_status "Failed to copy wifi powersave config to /etc/NetworkMAnager/conf.d/"
+    log "Copied wifi powersave mode successfully." "$GREEN"
+else
+    log "Warning: extras/wifi directory not found; skipping wifi-powersave config copy." "$YELLOW"
+fi
+
+# 12. Reboot Prompt
 log "\nInstallation and configuration complete!" "$GREEN"
 read -p "Would you like to reboot now to apply all changes? (y/N) " -n 1 -r
 echo
