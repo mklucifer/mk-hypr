@@ -180,19 +180,39 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
         log "Skipping backup of ~/.config." "$YELLOW"
     fi
 
-    # Copy repo config files to ~/.config
-    if [ -d "$HOME/mk-hypr/config" ]; then
-        log "Copying configuration files from repo to ~/.config..." "$YELLOW"
-        mkdir -p "$HOME/.config"
-        cp -r "$HOME/mk-hypr/config/"* "$HOME/.config/"
-        check_status "Failed to copy configuration files."
-        log "Configuration files copied successfully." "$GREEN"
-    else
-        log "Warning: 'config' directory not found at $HOME/mk-hypr/" "$RED"
-        log "Please make sure your dotfiles are in a 'config' directory next to this script." "$YELLOW"
+    # Define the actual source and destination
+    SOURCE_DIR="$HOME/mk-hypr/config"
+    DEST_DIR="$HOME/.config"
+
+    # Check if source directory exists
+    if [ ! -d "$SOURCE_DIR" ]; then
+        log "Source directory not found at '${SOURCE_DIR}'." "$RED"
+        log "Please ensure ~/mk-hypr/config exists and contains the config files you want to use." "$YELLOW"
+        exit 1
     fi
-else
-    log "Skipping configuration setup." "$YELLOW"
+
+    mkdir -p "$DEST_DIR"
+    echo "Destination directory is '${DEST_DIR}'."
+    echo "---"
+
+    # Loop through each item in mk-hypr/config and link it into ~/.config
+    find "${SOURCE_DIR}" -maxdepth 1 -mindepth 1 | while read -r ITEM_PATH; do
+        ITEM_NAME=$(basename "$ITEM_PATH")
+        DEST_PATH="${DEST_DIR}/${ITEM_NAME}"
+
+        echo "Processing: '${ITEM_NAME}'"
+
+        # If a file/dir/link already exists at destination, delete it
+        if [ -e "$DEST_PATH" ] || [ -L "$DEST_PATH" ]; then
+            echo " -> Found existing item at '${DEST_PATH}', removing..."
+            rm -rf "$DEST_PATH"
+            check_status "Failed to remove existing ${DEST_PATH}"
+        fi
+
+        # Create symlink
+        ln -s "$ITEM_PATH" "$DEST_PATH"
+        echo " -> Success: Created symlink at '${DEST_PATH}'"
+    done
 fi
 
 
