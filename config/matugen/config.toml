@@ -3,11 +3,33 @@ command = "swww"
 arguments = ["img", "--transition-type", "center"]
 set = true
 
-[templates.waybar]
-input_path = '~/.config/matugen/templates/colors.css'
-output_path = '~/.config/waybar/colors.css'
-post_hook = 'pkill -SIGUSR2 waybar'
+[template.hyprpanel]
+input_path = '~/.config/matugen/templates/hyprpanel.json'
+output_path = '~/.config/hyprpanel/colors.json'
+#[templates.waybar]
+#input_path = '~/.config/matugen/templates/colors.css'
+#output_path = '~/.config/waybar/colors.css'
+#post_hook = 'pkill -SIGUSR2 waybar'
 
 [templates.rofi]
 input_path = '~/.config/matugen/templates/rofi-colors.rasi'
 output_path = '~/.config/rofi/themes/rofi-colors.rasi'
+
+[templates.hyprland]
+input_path = '~/.config/matugen/templates/hyprland-colors.conf'
+output_path = '~/.config/hypr/colors.conf'
+post_hook = 'hyprctl reload'
+
+[templates.kitty]
+input_path = '~/.config/matugen/templates/kitty-colors.conf'
+output_path = '~/.config/kitty/kitty-colors.conf'
+
+[templates.discord]
+input_path = '~/.config/matugen/templates/midnight-discord.css'
+output_path = '~/.config/discord/midnight-discord.css'
+
+[templates.starship]
+input_path = '~/.config/matugen/templates/starship-colors.toml'
+output_path = '~/.config/starship-colors.toml'
+
+
