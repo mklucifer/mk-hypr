@@ -114,6 +114,8 @@ prep_stage=(
     qt5-wayland qt5ct qt6-wayland qt6ct qt5-svg qt5-quickcontrols2
     qt5-graphicaleffects gtk3 polkit-gnome pipewire wireplumber
     jq wl-clipboard cliphist python-requests pacman-contrib udiskie
+    libgtop upower aylurs-gtk-shell-git dart-sass gtksourceview3
+    libsoup3
 )
 
 nvidia_stage=(
@@ -127,8 +129,11 @@ install_stage=(
     blueman network-manager-applet gvfs thunar-archive-plugin file-roller
     starship papirus-icon-theme ttf-jetbrains-mono-nerd noto-fonts-emoji
     lxappearance xfce4-settings nwg-look-bin sddm neovim tmux fzf
-    hyprlock matugen-bin unzip zsh hyprshot hyprpaper ghostty fastfetch
+    hyprlock matugen unzip zsh hyprshot hyprpaper ghostty fastfetch
     qt5-quickcontrols zip discord flatpak linux-headers displaylink
+    ags-hyprpanel-git python python-gpustat brightnessctl pacman-contrib
+    power-profiles-daemon grimblast wf-recorder hyprpicker hyprsunset
+    swww
 )
 
 # 5. Nvidia Prompt and Final Package List Construction
