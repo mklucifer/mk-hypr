@@ -175,7 +175,8 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
         BACKUP_DIR="$HOME/config.orig"
         log "Backing up entire ~/.config to $BACKUP_DIR..." "$YELLOW"
         if [ -d "$HOME/.config" ]; then
-            cp -r "$HOME/.config" "$BACKUP_DIR"
+            mkdir -p "$BACKUP_DIR"
+            find "$HOME/.config" -mindepth 1 -maxdepth 1 ! -type l -exec cp -r {} "$BACKUP_DIR" \;
             check_status "Backup failed"
             log "Backup completed successfully." "$GREEN"
         else
