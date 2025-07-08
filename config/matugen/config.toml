@@ -13,7 +13,7 @@ output_path = '~/.config/hyprpanel/colors.json'
 
 [templates.rofi]
 input_path = '~/.config/matugen/templates/rofi-colors.rasi'
-output_path = '~/.config/rofi/themes/rofi-colors.rasi'
+output_path = '~/.config/rofi/colors.rasi'
 
 [templates.hyprland]
 input_path = '~/.config/matugen/templates/hyprland-colors.conf'

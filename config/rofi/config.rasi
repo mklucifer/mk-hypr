@@ -1,16 +1,135 @@
-configuration{
-    modi: "run,window,combi";
-    icon-theme: "Oranchelo";
-    show-icons: true;
-    terminal: "kitty";
-    drun-display-format: "{icon} {name}";
-    location: 0;
-    disable-history: false;
-    hide-scrollbar: true;
-    display-combi: " 🖥️  All ";
-    display-run: " 🏃  Run ";
-    display-window: " 🪟  Window";
-    sidebar-mode: true;
+configuration {
+  modi: "drun,run,filebrowser,window";
+  case-sensitive: false;
+  cycle: true;
+  filter: "";
+  scroll-method: 0;
+  normalize-match: true;
+  show-icons: true;
+  icon-theme: "Papirus";
+  steal-focus: false;
+  matching: "normal";
+  tokenize: true;
+  ssh-client: "ssh";
+  ssh-command: "{terminal} -e {ssh-client} {host} [-p {port}]";
+  parse-hosts: true;
+  parse-known-hosts: true;
+
+  drun-categories: "";
+  drun-match-fields: "name,generic,exec,categories,keywords";
+  drun-display-format: "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";
+  drun-show-actions: false;
+  drun-url-launcher: "xdg-open";
+  drun-use-desktop-cache: false;
+  drun-reload-desktop-cache: false;
+  drun {
+    parse-user:   true;
+    parse-system: true;
+  }
+
+  run-command: "{cmd}";
+  run-list-command: "";
+  run-shell-command: "{terminal} -e {cmd}";
+
+  run,drun {
+    fallback-icon: "application-x-addon";
+  }
+
+  window-match-fields: "title,class,role,name,desktop";
+  window-command: "wmctrl -i -R {window}";
+  window-format: "{w} - {c} - {t:0}";
+  window-thumbnail: false;
+
+  disable-history: false;
+  sorting-method: "normal";
+  max-history-size: 25;
+
+  display-window: "Windows";
+  display-windowcd: "Window CD";
+  display-run: "Run";
+  display-ssh: "SSH";
+  display-drun: "Apps";
+  display-combi: "Combi";
+  display-keys: "Keys";
+  display-filebrowser: "Files";
+
+  terminal: "rofi-sensible-terminal";
+  font: "Mono 16";
+  sort: false;
+  threads: 0;
+  click-to-exit: true;
+
+  filebrowser {
+    directories-first: true;
+    sorting-method:    "name";
+  }
+
+  timeout {
+    action: "kb-cancel";
+    delay:  0;
+  }
 }
 
-@theme "~/.config/rofi/themes/rofi-colors.rasi"
+* {
+  font: "Mono 16";
+}
+
+/* Main window background */
+window {
+  background-color: @surface-container-highest;
+  border: 2;
+  border-color: @outline;
+  padding: 10;
+}
+
+/* Main container */
+mainbox {
+  background-color: transparent;
+  padding: 10;
+}
+
+/* Prompt/input area */
+inputbar {
+  background-color: @primary-container;
+  text-color: @on-primary-container;
+  padding: 5;
+  border: 1;
+  border-color: @outline;
+}
+
+/* Search entry box */
+textbox-prompt-colon {
+  expand: false;
+  str: ":";
+}
+
+listview {
+  background-color: @surface-container;
+  text-color: @on-surface;
+  scrollbar: true;
+  fixed-height: false;
+  dynamic: true;
+  spacing: 2;
+  padding: 5;
+}
+
+/* Selected row */
+element selected {
+  background-color: @primary;
+  text-color: @on-primary;
+}
+
+/* Normal rows */
+element normal {
+  background-color: transparent;
+  text-color: @on-surface;
+}
+
+/* Highlighted text within matches */
+element-text {
+  highlight: @tertiary-container;
+  highlight-text: @on-tertiary-container;
+}
+
+
+@theme "theme.rasi"
