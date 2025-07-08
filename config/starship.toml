@@ -1,24 +1,34 @@
-format = """
-[░▒▓](#a3aed2)\
-[ 󰣇 ](bg:#a3aed2 fg:#090c0c)\
-[](bg:#769ff0 fg:#a3aed2)\
+format = """\
+[](bg:color6 fg:color2)\
+[󰣇 ](bg:color2 fg:color1)\
+[](fg:color2 bg:color1)\
+[](fg:color1 bg:color1)\
 $directory\
-[](fg:#769ff0 bg:#394260)\
+[](fg:color1 bg:color2)\
 $git_branch\
 $git_status\
-[](fg:#394260 bg:#212736)\
-$nodejs\
-$rust\
-$golang\
-$php\
-[](fg:#212736 bg:#1d2230)\
-$time\
-[▓▒░](fg:#1d2230)\
-\n$character"""
+$git_metrics\
+[](fg:color2 bg:color6)\
+\n$character\
+"""
+
+palette = 'colors'
+
+[palettes.colors]
+mustard = '#af8700' # optional spare
+color1 = '#98d3b0'
+color2 = '#003822'
+color3 = '#c0c9c1'
+color4 = '#1d201e'
+color5 = '#003822'
+color6 = '#111412'
+color7 = '#111412'
+color8 = '#98d3b0'
+color9 = '#ffb3b6'
 
 [directory]
-style = "fg:#e3e5e5 bg:#769ff0"
 format = "[ $path ]($style)"
+style = "fg:color2 bg:color1"
 truncation_length = 3
 truncation_symbol = "…/"
 
@@ -29,36 +39,34 @@ truncation_symbol = "…/"
 "Pictures" = " "
 
 [git_branch]
-symbol = ""
-style = "bg:#394260"
-format = '[[ $symbol $branch ](fg:#769ff0 bg:#394260)]($style)'
+format = '[ $symbol$branch(:$remote_branch) ]($style)'
+symbol = "  "
+style = "fg:color1 bg:color2"
 
 [git_status]
-style = "bg:#394260"
-format = '[[($all_status$ahead_behind )](fg:#769ff0 bg:#394260)]($style)'
+format = '[$all_status]($style)'
+style = "fg:color1 bg:color2"
 
-[nodejs]
-symbol = ""
-style = "bg:#212736"
-format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+[git_metrics]
+format = "([+$added]($added_style))[]($added_style)"
+added_style = "fg:color1 bg:color2"
+deleted_style = "fg:color1 bg:color2"
+disabled = true
 
-[rust]
-symbol = ""
-style = "bg:#212736"
-format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+[hg_branch]
+format = "[ $symbol$branch ]($style)"
+symbol = " "
 
-[golang]
-symbol = ""
-style = "bg:#212736"
-format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+[cmd_duration]
+format = "[ $duration ]($style)"
+style = "fg:color2 bg:color1"
 
-[php]
-symbol = ""
-style = "bg:#212736"
-format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+[character]
+success_symbol = '[ ➜](bold green) '
+error_symbol = '[ ✗](fg:#E84D44) '
 
 [time]
 disabled = false
-time_format = "%R" # Hour:Minute Format
-style = "bg:#1d2230"
-format = '[[  $time ](fg:#a0a9cb bg:#1d2230)]($style)'
+time_format = "%R"
+style = "bg:color6"
+format = '[[ 󱑍 $time ](bg:color1 fg:color2)]($style)'

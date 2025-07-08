@@ -30,6 +30,9 @@ output_path = '~/.config/discord/midnight-discord.css'
 
 [templates.starship]
 input_path = '~/.config/matugen/templates/starship-colors.toml'
-output_path = '~/.config/starship-colors.toml'
+output_path = '~/.config/starship.toml'
 
-
+[templates.pywalfox]
+input_path = '~/.config/matugen/templates/pywalfox-colors.json'
+output_path = '~/.cache/wal/colors.json'
+post_hook = 'pywalfox update'
