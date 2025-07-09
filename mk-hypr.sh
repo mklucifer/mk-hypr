@@ -133,7 +133,7 @@ install_stage=(
     qt5-quickcontrols zip discord flatpak linux-headers displaylink
     ags-hyprpanel-git python python-gpustat brightnessctl pacman-contrib
     power-profiles-daemon grimblast wf-recorder hyprpicker hyprsunset
-    swww python-pywal python-pywalfox tree ripgrep
+    swww python-pywal python-pywalfox tree ripgrep dotnet-sdk aspnet-runtime
 )
 
 # 5. Nvidia Prompt and Final Package List Construction

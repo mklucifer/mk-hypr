@@ -4,7 +4,7 @@
   ],
   "theme.font.name": "JetBrainsMonoNL Nerd Font Mono",
   "theme.font.label": "JetBrainsMonoNL Nerd Font Mono Bold",
-  "wallpaper.image": "/home/mk/.config/backgrounds/1356753.png",
+  "wallpaper.image": "/home/mk/.config/backgrounds/shaded.png",
   "theme.bar.menus.cards": "#24283b",
   "theme.bar.menus.text": "#c0caf5",
   "theme.bar.menus.background": "#1a1b26",
@@ -31,8 +31,7 @@
       "left": [
         "dashboard",
         "windowtitle",
-        "media",
-        "cava"
+        "media"
       ],
       "middle": [
         "workspaces"

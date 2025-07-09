@@ -16,15 +16,15 @@ palette = 'colors'
 
 [palettes.colors]
 mustard = '#af8700' # optional spare
-color1 = '#98d3b0'
-color2 = '#003822'
-color3 = '#c0c9c1'
-color4 = '#1d201e'
-color5 = '#003822'
-color6 = '#111412'
-color7 = '#111412'
-color8 = '#98d3b0'
-color9 = '#ffb3b6'
+color1 = '#cfbdff'
+color2 = '#36226b'
+color3 = '#cac4d2'
+color4 = '#211f24'
+color5 = '#36226b'
+color6 = '#141317'
+color7 = '#141317'
+color8 = '#cfbdff'
+color9 = '#f2bd81'
 
 [directory]
 format = "[ $path ]($style)"
