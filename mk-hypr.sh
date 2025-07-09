@@ -244,7 +244,13 @@ else
     log "Warning: extras/sddm/ directory not found; skipping SDDM theme copy." "$YELLOW"
 fi
 
-# 10. Enable System Services
+# 10. Copy .zshrc to ~/
+log "\nCopying .zshrc file to home directory..." "$YELLOW"
+cp "extras\.zshrc" ~/
+check_status "Failed to copy .zshrc to home directory."
+log "Copied .zshrc to home directory." "$GREEN"
+
+# 11. Enable System Services
 log "\nEnabling essential services..." "$YELLOW"
 sudo systemctl enable sddm.service
 check_status "Failed to enable SDDM."
@@ -255,7 +261,7 @@ check_status "Failed to enable Bluetooth."
 sudo systemctl enable displaylink.service
 check_status "Failed to enable Displaylink."
 
-# 11. Reboot Prompt
+# 12. Reboot Prompt
 log "\nInstallation and configuration complete!" "$GREEN"
 read -p "Would you like to reboot now to apply all changes? (y/N) " -n 1 -r
 echo
