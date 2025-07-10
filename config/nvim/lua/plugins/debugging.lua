@@ -5,9 +5,6 @@ return {
     "nvim-neotest/nvim-nio"
   },
   config = function()
-    require("lazydev").setup({
-      library = { "nvim-dap-ui" },
-    })
     require("dap-python").setup("python3")
     
     local dap, dapui = require("dap"), require("dapui")
