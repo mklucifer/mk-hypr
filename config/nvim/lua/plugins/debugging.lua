@@ -5,7 +5,7 @@ return {
     "nvim-neotest/nvim-nio"
   },
   config = function()
-    require("dap-python").setup("python3")
+    require("dap-python").setup("debugpy-adapter") -- or python3 instead of debugpy-adapter
     
     local dap, dapui = require("dap"), require("dapui")
     dap.listeners.before.attach.dapui_config = function()
