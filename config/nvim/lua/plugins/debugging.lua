@@ -8,6 +8,7 @@ return {
     require("lazydev").setup({
       library = { "nvim-dap-ui" },
     })
+    require("dap-python").setup("python3")
     
     local dap, dapui = require("dap"), require("dapui")
     dap.listeners.before.attach.dapui_config = function()
