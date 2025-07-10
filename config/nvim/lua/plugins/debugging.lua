@@ -8,6 +8,13 @@ return {
     require("dap-python").setup("debugpy-adapter") -- or python3 instead of debugpy-adapter
     
     local dap, dapui = require("dap"), require("dapui")
+
+    dap.adapters.gdb = {
+      type = "executable",
+      command = "gdb",
+      args = { "--interpreter=dap", "--eval-command", "set print pretty on" }
+    }
+    
     dap.listeners.before.attach.dapui_config = function()
       dapui.open()
     end
