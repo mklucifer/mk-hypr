@@ -134,6 +134,7 @@ install_stage=(
     ags-hyprpanel-git python python-gpustat brightnessctl pacman-contrib
     power-profiles-daemon grimblast wf-recorder hyprpicker hyprsunset
     swww python-pywalfox tree ripgrep dotnet-sdk aspnet-runtime
+    python-debugpy
 )
 
 # 5. Nvidia Prompt and Final Package List Construction
