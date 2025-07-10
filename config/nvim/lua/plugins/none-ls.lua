@@ -36,6 +36,8 @@ return {
 					null_ls.builtins.diagnostics.zsh,
 				},
 			})
+
+			vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, { desc = "Format document" })
 		end,
 	},
 }
