@@ -544,6 +544,6 @@
   "scalingPriority": "hyprland",
   "theme.bar.menus.monochrome": false,
   "wallpaper.enable": true,
-  "wallpaper.pywal": false,
+  "wallpaper.pywal": true,
   "bar.notifications.hideCountWhenZero": true
 }
