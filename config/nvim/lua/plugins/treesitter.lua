@@ -16,15 +16,15 @@ return {
 				"python",
 				"rust",
 				"vim",
-				"ziggy"
+				"ziggy",
 			},
 			auto_install = true,
 			sync_install = false,
 			highlight = {
-				enable = true
+				enable = true,
 			},
 			indent = {
-				enable = true
+				enable = true,
 			},
 
 			incremental_selection = {
@@ -37,5 +37,5 @@ return {
 				},
 			},
 		})
-	end
+	end,
 }

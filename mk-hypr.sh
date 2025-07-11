@@ -134,7 +134,7 @@ install_stage=(
     ags-hyprpanel-git python python-gpustat brightnessctl pacman-contrib
     power-profiles-daemon grimblast wf-recorder hyprpicker hyprsunset
     swww python-pywalfox tree ripgrep dotnet-sdk aspnet-runtime
-    gdb spotify
+    gdb spotify cargo
 )
 
 # 5. Nvidia Prompt and Final Package List Construction
@@ -155,6 +155,12 @@ fi
 log "\nStarting main installation process. This may take a while..." "$YELLOW"
 yay -S --needed --noconfirm "${packages_to_install[@]}"
 check_status "Failed to install one or more packages."
+
+# 6.1 Install powerlevel10k
+log "\nInstalling powerlevel10k" "$YELLOW"
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
+check_status "Failed to install powerlevel10k."
 
 # 7. Copy Configuration Files
 log "\nPreparing to set up configuration files..." "$YELLOW"
