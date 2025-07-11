@@ -250,7 +250,13 @@ cp "extras\.zshrc" ~/
 check_status "Failed to copy .zshrc to home directory."
 log "Copied .zshrc to home directory." "$GREEN"
 
-# 9.1 Copy powerlevel10k theme to ~/
+# 9.1 Copy tmux config
+log "\nCopying tmux configuration to home directory" "$YELLOW"
+cp "extras\.tmux.conf" ~/
+check_status "Failed to copy tmux configuration to home directory."
+log "Copied tmux config to home directory." "$GREEN"
+
+# 9.2 Copy powerlevel10k theme to ~/
 log "\nCopying powerlevel10k theme to home directory" "$YELLOW"
 cp -r "extras\powerlevel10k" ~/
 check_status "Failed to copy powerlevel10k themes to home directory."
