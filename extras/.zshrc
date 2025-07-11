@@ -9,10 +9,6 @@ fi
 export EDITOR="nvim"
 export SUDO_EDITOR="$EDITOR"
 
-export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
-
 export PATH=$PATH:/usr/local/go/bin
 
 HISTFILE=~/.history

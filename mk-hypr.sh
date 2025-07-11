@@ -250,6 +250,12 @@ cp "extras\.zshrc" ~/
 check_status "Failed to copy .zshrc to home directory."
 log "Copied .zshrc to home directory." "$GREEN"
 
+# 9.1 Copy powerlevel10k theme to ~/
+log "\nCopying powerlevel10k theme to home directory" "$YELLOW"
+cp -r "extras\powerlevel10k" ~/
+check_status "Failed to copy powerlevel10k themes to home directory."
+log "Copied powerlevel10k to home directory." "$GREEN"
+
 # 10. Enable System Services
 log "\nEnabling essential services..." "$YELLOW"
 sudo systemctl enable sddm.service
