@@ -54,7 +54,7 @@ return {
 						["<leader>a"] = {query="@parameter.inner", desc="Swap with next parameter"},
 					},
 					swap_previous = {
-						["<leader>A"] = "@parameter.inner",
+						["<leader>A"] = {query="@parameter.inner", desc="Swap with previous parameter"}
 					},
 				},
 			},

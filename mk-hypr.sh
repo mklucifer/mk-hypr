@@ -130,11 +130,11 @@ install_stage=(
     starship papirus-icon-theme ttf-jetbrains-mono-nerd noto-fonts-emoji
     lxappearance xfce4-settings nwg-look-bin sddm neovim tmux fzf
     hyprlock matugen unzip zsh hyprshot hyprpaper ghostty fastfetch
-    qt5-quickcontrols zip discord flatpak linux-headers displaylink
+    qt5-quickcontrols zip discord linux-headers displaylink
     ags-hyprpanel-git python python-gpustat brightnessctl pacman-contrib
     power-profiles-daemon grimblast wf-recorder hyprpicker hyprsunset
     swww python-pywalfox tree ripgrep dotnet-sdk aspnet-runtime
-    python-debugpy gdb spotify
+    gdb spotify
 )
 
 # 5. Nvidia Prompt and Final Package List Construction
