@@ -134,7 +134,7 @@ install_stage=(
     ags-hyprpanel-git python python-gpustat brightnessctl pacman-contrib
     power-profiles-daemon grimblast wf-recorder hyprpicker hyprsunset
     swww python-pywalfox tree ripgrep dotnet-sdk aspnet-runtime
-    python-debugpy gdb
+    python-debugpy gdb spotify
 )
 
 # 5. Nvidia Prompt and Final Package List Construction
@@ -156,14 +156,7 @@ log "\nStarting main installation process. This may take a while..." "$YELLOW"
 yay -S --needed --noconfirm "${packages_to_install[@]}"
 check_status "Failed to install one or more packages."
 
-# 7. Install Flatpak and Spotify via Flatpak
-log "\nInstalling Spotify via Flatpak..." "$YELLOW"
-# Install Spotify
-flatpak install -y flathub com.spotify.Client
-check_status "Failed to install Spotify via Flatpak."
-log "Spotify installed via Flatpak successfully." "$GREEN"
-
-# 8. Copy Configuration Files
+# 7. Copy Configuration Files
 log "\nPreparing to set up configuration files..." "$YELLOW"
 read -p "Do you want to install the recommended configurations for Hyprland, Kitty, Waybar, etc.? (y/N) " -n 1 -r
 echo
@@ -223,7 +216,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 fi
 
 
-# 9. Copying SDDM config and theme
+# 8. Copying SDDM config and theme
 log "\nCopying SDDM configuration and theme..." "$YELLOW"
 # Ensure SDDM config directory exists
 sudo mkdir -p /usr/lib/sddm/sddm.conf.d
@@ -245,13 +238,13 @@ else
     log "Warning: extras/sddm/ directory not found; skipping SDDM theme copy." "$YELLOW"
 fi
 
-# 10. Copy .zshrc to ~/
+# 9. Copy .zshrc to ~/
 log "\nCopying .zshrc file to home directory..." "$YELLOW"
 cp "extras\.zshrc" ~/
 check_status "Failed to copy .zshrc to home directory."
 log "Copied .zshrc to home directory." "$GREEN"
 
-# 11. Enable System Services
+# 10. Enable System Services
 log "\nEnabling essential services..." "$YELLOW"
 sudo systemctl enable sddm.service
 check_status "Failed to enable SDDM."
@@ -262,7 +255,7 @@ check_status "Failed to enable Bluetooth."
 sudo systemctl enable displaylink.service
 check_status "Failed to enable Displaylink."
 
-# 12. Reboot Prompt
+# 11. Reboot Prompt
 log "\nInstallation and configuration complete!" "$GREEN"
 read -p "Would you like to reboot now to apply all changes? (y/N) " -n 1 -r
 echo

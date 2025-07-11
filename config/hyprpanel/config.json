@@ -23,8 +23,8 @@
   "theme.bar.buttons.media.icon": "#bb9af7",
   "theme.matugen": true,
   "theme.matugen_settings.mode": "dark",
-  "theme.matugen_settings.scheme_type": "fidelity",
-  "theme.matugen_settings.variation": "monochrome_1",
+  "theme.matugen_settings.scheme_type": "tonal-spot",
+  "theme.matugen_settings.variation": "standard_1",
   "theme.notification.opacity": 90,
   "bar.layouts": {
     "0": {
